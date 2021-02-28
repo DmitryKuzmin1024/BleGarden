@@ -1,8 +1,11 @@
 package com.example.blegarden
 
 import android.Manifest
+import android.bluetooth.BluetoothAdapter
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,14 +14,21 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), LifecycleOwner {
+class MainActivity : AppCompatActivity() {
+
+    private val ENABLE_BLUETOOTH_REQUEST_CODE = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val mVm by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java)}
+
+        promptEnableBluetooth()
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
@@ -33,9 +43,15 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         radio_red2.setOnClickListener { mGattClient.sendData(9) }
         radio_red0.setOnClickListener { mGattClient.sendData(7) }
 
-        mGattClient.getBleData().observe(this, Observer {
+//        mVm.getBleData().observe(this, Observer {
+//            Log.i(
+//                "ScanCallback",
+//                "$it"  + "rrr "      )
+//        })
 
-            if (it !== null) {
+        mVm.getBleData().observe(this, Observer { ///!!!!!!!!!!!! nvg
+
+            if (it != null) {
 
                 val data = it.split(" ")
 
@@ -129,9 +145,9 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         }
     }
 
-//    private fun promptEnableBluetooth() {
-//            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-//            startActivityForResult(enableBtIntent, ENABLE_BLUETOOTH_REQUEST_CODE)
-//    }
+    private fun promptEnableBluetooth() {
+        val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+        startActivityForResult(enableBtIntent, ENABLE_BLUETOOTH_REQUEST_CODE)
+    }
 
 }

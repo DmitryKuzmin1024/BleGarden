@@ -12,13 +12,15 @@ import java.util.*
 
 class Gatt : BluetoothGattCallback() {
 
+    val mMainViewModel = MainViewModel()
+
     private companion object {
-        private val bleData = MutableLiveData<String>()
+//        private val bleData = MutableLiveData<String>()
         private var gatt1: BluetoothGatt? = null
         private var char1: BluetoothGattCharacteristic? = null
     }
 
-    fun getBleData(): LiveData<String?> { return bleData }
+//    fun getBleData(): LiveData<String?> { return bleData }
 
     override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
         gatt1 = gatt.also { it.discoverServices() }
@@ -60,11 +62,12 @@ class Gatt : BluetoothGattCallback() {
     ) {
         char1?.value?.map { it.toChar() }.let {
             if (it?.size == 20) {
-                bleData.postValue(it?.joinToString(""))
-                Log.i(
-                    "ScanCallback",
-                    "converted: ${ bleData.value?.replace("\n", " ")} size: ${characteristic.value.size}"
-                )
+//                bleData.postValue(it?.joinToString(""))
+                mMainViewModel.setData(it.joinToString ( "" ))
+//                Log.i(
+//                    "ScanCallback",
+//                    "converted: ${ bleData.value?.replace("\n", " ")} size: ${characteristic.value.size}"
+//                )
             }
         }
     }
@@ -86,7 +89,7 @@ class Gatt : BluetoothGattCallback() {
     }
 
     fun disconnectGatt() {
-        bleData.postValue(null)
+//        bleData.postValue(null)
         gatt1?.disconnect()
         gatt1?.close()
     }
