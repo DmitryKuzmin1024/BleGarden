@@ -10,7 +10,7 @@ import android.util.Log
 
 class Scanner(context: Context) {
 
-    val mGattClient = Gatt()
+    val mGattClient = GattClient.instance
 
     private val bluetoothAdapter: BluetoothAdapter by lazy {
         val bluetoothManager =
