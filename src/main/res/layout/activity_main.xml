@@ -1,183 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.blegarden.MainViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-        <TextView
-            android:id="@+id/textView1"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="DATA"
-            android:textSize="56sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="NO"
-            android:textSize="56sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="56sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView1" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/buttonWrite3"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="10dp"
-            android:text="cmp"
-            android:textColor="#009688"
-            app:layout_constraintBottom_toTopOf="@+id/scan_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/buttonWrite2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <Button
-            android:id="@+id/buttonWrite"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="5dp"
-            android:text="LED"
-            android:textColor="#009688"
-            app:layout_constraintBottom_toTopOf="@+id/scan_button"
-            app:layout_constraintEnd_toStartOf="@+id/buttonWrite2"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/buttonWrite2"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:text="fan"
-            android:textColor="#009688"
-            app:layout_constraintBottom_toTopOf="@+id/scan_button"
-            app:layout_constraintEnd_toStartOf="@+id/buttonWrite3"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/buttonWrite" />
-
-        <Button
-            android:id="@+id/scan_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
-            android:text="Start"
-            android:textColor="#455A64"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonKill"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/buttonKill"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:text="KILL ALL"
-            android:textColor="#FF5722"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/scan_button" />
-
-        <RadioGroup
-            android:id="@+id/radio_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:gravity="center|center_horizontal|center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/buttonWrite3"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:visibility="invisible"
             app:layout_constraintTop_toTopOf="parent">
 
-            <RadioButton
-                android:id="@+id/radio_red1"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{viewModel.humidity}"
+                android:textSize="56sp"
+                app:layout_constraintBottom_toTopOf="@+id/textView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{viewModel.temperature}"
+                android:textSize="56sp"
+                app:layout_constraintBottom_toTopOf="@+id/textView1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.ph}"
+                android:textSize="56sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/buttonWrite3"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="2.5dp"
-                android:layout_weight="1"
-                android:text="18/06" />
+                android:layout_marginEnd="10dp"
+                android:onClick="@{() -> viewModel.setDevice(2,5,6)}"
+                app:onOrOff="@{viewModel.bleData}"
+                app:intOfArray="@{2}"
+                app:deviceName="@{viewModel.CMP}"
+                android:text="cmp"
+                android:textColor="#009688"
+                app:layout_constraintBottom_toTopOf="@+id/scan_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/buttonWrite2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
-            <RadioButton
-                android:id="@+id/radio_red2"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/buttonWrite"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2.5dp"
-                android:layout_marginEnd="2.5dp"
-                android:layout_weight="1"
-                android:text="12/12" />
-
-            <RadioButton
-                android:id="@+id/radio_red0"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_marginStart="2.5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                android:text="-0ɟf-" />
+                android:onClick="@{() -> viewModel.setDevice(0,1,2)}"
+                android:text="LED"
+                app:onOrOff="@{viewModel.bleData}"
+                app:intOfArray="@{0}"
+                app:deviceName="@{viewModel.LED}"
+                android:textColor="#009688"
+                app:layout_constraintBottom_toTopOf="@+id/scan_button"
+                app:layout_constraintEnd_toStartOf="@+id/buttonWrite2"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        </RadioGroup>
+            <Button
+                android:id="@+id/buttonWrite2"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="fan"
+                android:onClick="@{() -> viewModel.setDevice(1,3,4)}"
+                app:onOrOff="@{viewModel.bleData}"
+                app:intOfArray="@{1}"
+                app:deviceName="@{viewModel.FUN}"
+                android:textColor="#009688"
+                app:layout_constraintBottom_toTopOf="@+id/scan_button"
+                app:layout_constraintEnd_toStartOf="@+id/buttonWrite3"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/buttonWrite" />
+
+            <Button
+                android:id="@+id/scan_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                app:startOrStop="@{viewModel.bleData}"
+                android:onClick="@{() -> viewModel.setStartButton()}"
+                android:text="Start"
+                android:textColor="#455A64"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonKill"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/buttonKill"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="KILL ALL"
+                android:textColor="#FF5722"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/scan_button" />
+
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:orientation="horizontal"
+                android:visibility="invisible"
+                app:VisibleOrZero="@{viewModel.bleData}"
+                app:layout_constraintBottom_toTopOf="@+id/buttonWrite3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:id="@+id/radio_red1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.modeDevice(8)}"
+                    app:setMode="@{viewModel.bleData}"
+                    app:modeStatus="@{1}"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="2.5dp"
+                    android:layout_weight="1"
+                    android:text="18/06" />
+
+                <RadioButton
+                    android:id="@+id/radio_red2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.modeDevice(9)}"
+                    app:setMode="@{viewModel.bleData}"
+                    app:modeStatus="@{2}"
+                    android:layout_marginStart="2.5dp"
+                    android:layout_marginEnd="2.5dp"
+                    android:layout_weight="1"
+                    android:text="12/12" />
+
+                <RadioButton
+                    android:id="@+id/radio_red0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.modeDevice(7)}"
+                    app:setMode="@{viewModel.bleData}"
+                    app:modeStatus="@{0}"
+
+
+                    android:layout_marginStart="2.5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:text="-0ɟf-" />
+
+            </RadioGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

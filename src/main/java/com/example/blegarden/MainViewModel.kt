@@ -1,13 +1,14 @@
 package com.example.blegarden
 
 import android.app.Application
-import android.widget.Button
-import android.widget.TextView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
+
+    val LED: String = "LED"
+    val FUN: String = "FUN"
+    val CMP: String = "CMP"
 
     val mScanner = Scanner(getApplication<Application>().applicationContext)
 
@@ -15,40 +16,28 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val bleData: MutableLiveData<ByteArray> = mGattClient.data
 
-    fun setStartButton(button: Button) {
-        button.text = "Connect"
-        button.setOnClickListener { mScanner.startBleScan() }
-    }
+    var temperature: MutableLiveData<String> = mGattClient.temp
+    var humidity: MutableLiveData<String> = mGattClient.humd
+    var ph: MutableLiveData<String> = mGattClient.ph
 
-    fun setSopButton(button: Button) {
-        button.text = "Disconnect"
-        button.setOnClickListener { mGattClient.disconnectGatt() }
-    }
-
-    fun setButton(button: Button, byte: Byte, str: String = button.text.toString()) {
-        button.text = str
-        button.setOnClickListener { (mGattClient.sendData(byte)) }
-    }
-
-    fun setText(
-        textView1: TextView,
-        str1: String,
-        textView2: TextView,
-        str2: String,
-        textView3: TextView,
-        str3: String,
-        str4: String
-    ) {
-
-        if (str4.length < 2) {
-            textView3.text =
-                "ph $str3.0$str4"
+    fun setStartButton() {
+        if (bleData.value?.size != 8) {
+            mScanner.startBleScan()
         } else {
-            textView3.text =
-                "ph $str3.$str4"
+            mGattClient.disconnectGatt()
         }
-        textView1.text = "t $str1`c"
-        textView2.text = "h $str2%"
+    }
+
+    fun setDevice(int: Int, int1: Int, int2: Int) {
+        if (bleData.value!![int] == 0.toByte()) {
+            mGattClient.sendData(int1.toByte())
+        } else {
+            mGattClient.sendData(int2.toByte())
+        }
+    }
+
+    fun modeDevice(int: Int) {
+        mGattClient.sendData(int.toByte())
     }
 
 }
