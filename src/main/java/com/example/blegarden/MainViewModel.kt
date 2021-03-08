@@ -10,34 +10,36 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val FUN: String = "FUN"
     val CMP: String = "CMP"
 
-    val mScanner = Scanner(getApplication<Application>().applicationContext)
+    private val mScanner = Scanner(getApplication<Application>().applicationContext)
 
     private val mGattClient = GattClient.instance
 
     val bleData: MutableLiveData<ByteArray> = mGattClient.data
 
-    var temperature: MutableLiveData<String> = mGattClient.temp
-    var humidity: MutableLiveData<String> = mGattClient.humd
-    var ph: MutableLiveData<String> = mGattClient.ph
-
-    fun setStartButton() {
-        if (bleData.value?.size != 8) {
+    fun setStartButton(dataArray: ByteArray) {
+        if (dataArray.size != 8) {
             mScanner.startBleScan()
         } else {
             mGattClient.disconnectGatt()
         }
     }
 
-    fun setDevice(int: Int, int1: Int, int2: Int) {
-        if (bleData.value!![int] == 0.toByte()) {
-            mGattClient.sendData(int1.toByte())
+    fun setDevice(dataArray: ByteArray, positionInArray: Int, turnON: Byte, turnOff: Byte) {
+        if (dataArray[positionInArray] == 0.toByte()) {
+            mGattClient.sendData(turnON)
         } else {
-            mGattClient.sendData(int2.toByte())
+            mGattClient.sendData(turnOff.toByte())
         }
+    }
+
+    fun setKillAllButton(){
+        mGattClient.sendData(BytesValue.KILL_ALL.value)
     }
 
     fun modeDevice(int: Int) {
         mGattClient.sendData(int.toByte())
     }
+
+
 
 }

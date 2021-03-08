@@ -16,7 +16,7 @@ import com.example.blegarden.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
 
     private val ENABLE_BLUETOOTH_REQUEST_CODE = 1
 
@@ -28,9 +28,12 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
 
         promptEnableBluetooth()
+        permissionChecking()
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+    }
 
+    private fun permissionChecking(){
         val permissionCheck =
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {

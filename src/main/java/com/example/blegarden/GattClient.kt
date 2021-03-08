@@ -9,7 +9,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import java.util.*
 
-class GattClient() {
+class GattClient {
 
     companion object {
         val instance = GattClient()
@@ -17,12 +17,7 @@ class GattClient() {
         private var char1: BluetoothGattCharacteristic? = null
     }
 
-    val data = MutableLiveData<ByteArray>().default(byteArrayOf(0, 0, 0, 0))
-    val temp = MutableLiveData<String>()
-    val humd = MutableLiveData<String>()
-    val ph = MutableLiveData<String>()
-
-    fun <T : Any?> MutableLiveData<T>.default(initialValue: T) = apply { setValue(initialValue) }
+    val data = MutableLiveData<ByteArray>().apply { value = byteArrayOf(0, 0, 0, 0) }
 
     private val gattCallback = object : BluetoothGattCallback() {
 
@@ -65,16 +60,7 @@ class GattClient() {
             gatt: BluetoothGatt,
             characteristic: BluetoothGattCharacteristic
         ) {
-
             data.postValue(char1?.value!!)
-
-            temp.postValue("t " + char1?.value!![6].toString() + "`c")
-            humd.postValue("h " + char1?.value!![7].toString() + "%")
-            if (char1?.value!![5].toString().length < 2) {
-                ph.postValue("ph " + char1?.value!![4].toString() + ".0" + char1?.value!![5].toString())
-            } else {
-                ph.postValue("ph " + char1?.value!![4].toString() + "." + char1?.value!![5].toString())
-            }
 
             Log.i(
                 "ScanCallback",
@@ -104,10 +90,6 @@ class GattClient() {
         data.postValue(byteArrayOf(0, 0, 0, 0))
         gatt1?.disconnect()
         gatt1?.close()
-    }
-
-    fun readData() {
-        gatt1?.readCharacteristic(char1)
     }
 
     fun sendData(data: Byte) {
