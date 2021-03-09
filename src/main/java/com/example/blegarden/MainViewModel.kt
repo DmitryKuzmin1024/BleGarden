@@ -6,13 +6,9 @@ import androidx.lifecycle.MutableLiveData
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    val LED: String = "LED"
-    val FUN: String = "FUN"
-    val CMP: String = "CMP"
-
     private val mScanner = Scanner(getApplication<Application>().applicationContext)
 
-    private val mGattClient = GattClient.instance
+    private val mGattClient = GattClient
 
     val bleData: MutableLiveData<ByteArray> = mGattClient.data
 
@@ -28,7 +24,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (dataArray[positionInArray] == 0.toByte()) {
             mGattClient.sendData(turnON)
         } else {
-            mGattClient.sendData(turnOff.toByte())
+            mGattClient.sendData(turnOff)
         }
     }
 

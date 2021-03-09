@@ -9,13 +9,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import java.util.*
 
-class GattClient {
+object GattClient {
 
-    companion object {
-        val instance = GattClient()
-        private var gatt1: BluetoothGatt? = null
-        private var char1: BluetoothGattCharacteristic? = null
-    }
+    private var gatt1: BluetoothGatt? = null
+    private var char1: BluetoothGattCharacteristic? = null
 
     val data = MutableLiveData<ByteArray>().apply { value = byteArrayOf(0, 0, 0, 0) }
 

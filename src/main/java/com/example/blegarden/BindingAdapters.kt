@@ -20,6 +20,7 @@ fun VisibleOrZero(view: View, byteArray: ByteArray) {
     view.visibility = if (byteArray.size == 8) View.VISIBLE else View.INVISIBLE
 }
 
+
 @BindingAdapter(value = ["app:setMode", "app:modeStatus"])
 fun setMode(radioButton: RadioButton, byteArray: ByteArray, int: Int) {
     radioButton.isChecked = byteArray[3] == int.toByte()

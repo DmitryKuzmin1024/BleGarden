@@ -28,12 +28,12 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
 
         promptEnableBluetooth()
-        permissionChecking()
+        permissionCheck()
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
-    private fun permissionChecking(){
+    private fun permissionCheck(){
         val permissionCheck =
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
