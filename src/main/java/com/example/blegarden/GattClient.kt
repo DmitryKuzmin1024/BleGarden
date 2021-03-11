@@ -87,8 +87,9 @@ object GattClient {
         }
     }
 
-    fun connectGatt(devise: BluetoothDevice, context: Context) =
+    fun connectGatt(devise: BluetoothDevice, context: Context) {
         devise.connectGatt(context, true, gattCallback)
+    }
 
     fun disconnectGatt() = gatt1?.disconnect()
 
