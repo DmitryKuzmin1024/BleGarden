@@ -14,16 +14,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.blegarden.databinding.ActivityMainBinding
 
+private const val ENABLE_BLUETOOTH_REQUEST_CODE = 1
+
 class MainActivity : AppCompatActivity() {
-
     private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
-
-    private val ENABLE_BLUETOOTH_REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding : ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
+        val binding: ActivityMainBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
-    private fun permissionCheck(){
+    private fun permissionCheck() {
         val permissionCheck =
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
@@ -57,8 +56,6 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
             }
-        } else {
-            Toast.makeText(this, "Location permissions already granted", Toast.LENGTH_SHORT).show()
         }
     }
 

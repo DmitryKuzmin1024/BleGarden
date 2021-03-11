@@ -1,41 +1,46 @@
 package com.example.blegarden
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 
+
 class MainViewModel(application: Application) : AndroidViewModel(application) {
-
     private val mScanner = Scanner(getApplication<Application>().applicationContext)
+    val bleData: MutableLiveData<ByteArray> = GattClient.data
 
-    private val mGattClient = GattClient
-
-    val bleData: MutableLiveData<ByteArray> = mGattClient.data
-
-    fun setStartButton(dataArray: ByteArray) {
-        if (dataArray.size != 8) {
-            mScanner.startBleScan()
+    fun setStartButton(byteArray: ByteArray) {
+        if (byteArray.size != 8) {
+            if (mScanner.bluetoothAdapter.isEnabled) {
+                mScanner.startBleScan()
+            } else {
+                Toast.makeText(
+                    getApplication<Application>().applicationContext,
+                    "Enable bluetooth",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         } else {
-            mGattClient.disconnectGatt()
+            GattClient.disconnectGatt()
         }
     }
 
     fun setDevice(dataArray: ByteArray, positionInArray: Int, turnON: Byte, turnOff: Byte) {
         if (dataArray[positionInArray] == 0.toByte()) {
-            mGattClient.sendData(turnON)
+            GattClient.sendData(turnON)
         } else {
-            mGattClient.sendData(turnOff)
+            GattClient.sendData(turnOff)
         }
     }
 
-    fun setKillAllButton(){
-        mGattClient.sendData(BytesValue.KILL_ALL.value)
+    fun setKillAllButton() {
+        GattClient.sendData(BytesValue.KILL_ALL.value)
     }
 
     fun modeDevice(int: Int) {
-        mGattClient.sendData(int.toByte())
+        GattClient.sendData(int.toByte())
     }
-
 
 
 }
