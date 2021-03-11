@@ -2,17 +2,24 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModel"
             type="com.example.blegarden.MainViewModel" />
 
         <variable
             name="bytesValue"
-            type="com.example.blegarden.BytesValue" />
+            type="com.example.blegarden.enums.BytesValue" />
+
         <variable
             name="deviceNames"
-            type="com.example.blegarden.DeviceNames" />
+            type="com.example.blegarden.enums.DeviceNames" />
+
+        <variable
+            name="positionsInArray"
+            type="com.example.blegarden.enums.PositionsInArray" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +34,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            app:VisibleOrZero="@{viewModel.bleData}"
+            app:visibleOrZero="@{viewModel.bleData}"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@{@string/humidity(Byte.toString(viewModel.bleData[7]))}"
+                android:text="@{@string/humidity(Byte.toString(viewModel.bleData[positionsInArray.HUMIDITY.position]))}"
                 android:textSize="56sp"
                 app:layout_constraintBottom_toTopOf="@+id/textView2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@{@string/temperature(Byte.toString(viewModel.bleData[6]))}"
+                android:text="@{@string/temperature(Byte.toString(viewModel.bleData[positionsInArray.TEMPERATURE.position]))}"
                 android:textSize="56sp"
                 app:layout_constraintBottom_toTopOf="@+id/textView1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -61,12 +68,13 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{@string/ph(Byte.toString(viewModel.bleData[4]),Byte.toString(viewModel.bleData[5]))}"
+                android:text="@{@string/ph(Byte.toString(viewModel.bleData[positionsInArray.PH_PART_ONE.position]),Byte.toString(viewModel.bleData[positionsInArray.PH_PART_TWO.position]))}"
                 android:textSize="56sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,10 +93,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="10dp"
-                android:onClick="@{() -> viewModel.setDevice(viewModel.bleData, 2, bytesValue.CMP_ON.value, bytesValue.CMP_OFF.value)}"
+                android:onClick="@{() -> viewModel.setDevice(viewModel.bleData, positionsInArray.CMP_STATUS.position, bytesValue.CMP_ON.value, bytesValue.CMP_OFF.value)}"
                 android:textColor="#009688"
                 app:deviceName="@{deviceNames.CMP.value}"
-                app:intOfArray="@{2}"
+                app:intOfArray="@{positionsInArray.CMP_STATUS.position}"
                 app:layout_constraintBottom_toTopOf="@+id/scan_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/buttonWrite2"
@@ -103,10 +111,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="5dp"
-                android:onClick="@{() -> viewModel.setDevice(viewModel.bleData, 0, bytesValue.LED_ON.value, bytesValue.LED_OFF.value)}"
+                android:onClick="@{() -> viewModel.setDevice(viewModel.bleData, positionsInArray.LED_STATUS.position, bytesValue.LED_ON.value, bytesValue.LED_OFF.value)}"
                 android:textColor="#009688"
                 app:deviceName="@{deviceNames.LED.value}"
-                app:intOfArray="@{0}"
+                app:intOfArray="@{positionsInArray.LED_STATUS.position}"
                 app:layout_constraintBottom_toTopOf="@+id/scan_button"
                 app:layout_constraintEnd_toStartOf="@+id/buttonWrite2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,10 +127,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:onClick="@{() -> viewModel.setDevice(viewModel.bleData, 1, bytesValue.FUN_ON.value, bytesValue.FUN_OFF.value)}"
+                android:onClick="@{() -> viewModel.setDevice(viewModel.bleData, positionsInArray.FUN_STATUS.position, bytesValue.FUN_ON.value, bytesValue.FUN_OFF.value)}"
                 android:textColor="#009688"
                 app:deviceName="@{deviceNames.FUN.value}"
-                app:intOfArray="@{1}"
+                app:intOfArray="@{positionsInArray.FUN_STATUS.position}"
                 app:layout_constraintBottom_toTopOf="@+id/scan_button"
                 app:layout_constraintEnd_toStartOf="@+id/buttonWrite3"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -153,7 +161,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:onClick="@{() -> viewModel.setKillAllButton()}"
-                android:text="KILL ALL"
+                android:text="@string/killAll"
                 android:textColor="#FF5722"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -168,7 +176,7 @@
                 android:gravity="center|center_horizontal|center_vertical"
                 android:orientation="horizontal"
                 android:visibility="invisible"
-                app:VisibleOrZero="@{viewModel.bleData}"
+                app:visibleOrZero="@{viewModel.bleData}"
                 app:layout_constraintBottom_toTopOf="@+id/buttonWrite3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -182,7 +190,7 @@
                     android:layout_marginEnd="2.5dp"
                     android:layout_weight="1"
                     android:onClick="@{() -> viewModel.modeDevice(bytesValue.MODE_ONE.value)}"
-                    android:text="18/06"
+                    android:text="@string/mode1"
                     app:modeStatus="@{1}"
                     app:setMode="@{viewModel.bleData}" />
 
@@ -194,7 +202,7 @@
                     android:layout_marginEnd="2.5dp"
                     android:layout_weight="1"
                     android:onClick="@{() -> viewModel.modeDevice(bytesValue.MODE_TWO.value)}"
-                    android:text="12/12"
+                    android:text="@string/mode2"
                     app:modeStatus="@{2}"
                     app:setMode="@{viewModel.bleData}" />
 
@@ -206,7 +214,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     android:onClick="@{() -> viewModel.modeDevice(bytesValue.MODE_ZERO.value)}"
-                    android:text="-0ɟf-"
+                    android:text="@string/mode0"
                     app:modeStatus="@{0}"
                     app:setMode="@{viewModel.bleData}" />
 

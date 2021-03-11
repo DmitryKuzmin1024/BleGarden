@@ -24,19 +24,21 @@ object GattClient {
         }
 
         override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
-            Log.i(
-                "BluetoothLog",
-                "Discovered ${gatt.services.size} services for ${gatt.device.address}"
-            )
-            gatt.services.firstOrNull { service ->
-                service.uuid == serviceUuid
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                Log.i(
+                    "BluetoothLog",
+                    "Discovered ${gatt.services.size} services for ${gatt.device.address}"
+                )
+                gatt.services.firstOrNull { service ->
+                    service.uuid == serviceUuid
+                }
+                    ?.characteristics?.firstOrNull { char ->
+                        char.uuid == charUuid
+                    }
+                    ?.let { myChar ->
+                        char1 = myChar.also { gatt1?.readCharacteristic(it) }
+                    }
             }
-                ?.characteristics?.firstOrNull { char ->
-                    char.uuid == charUuid
-                }
-                ?.let { myChar ->
-                    char1 = myChar.also { gatt1?.readCharacteristic(it) }
-                }
         }
 
         override fun onCharacteristicRead(
@@ -49,7 +51,7 @@ object GattClient {
                     gatt1?.setCharacteristicNotification(char1, true)
                     Log.i(
                         "BluetoothLog",
-                        "Read char ${characteristic.uuid} value ${characteristic.value}"
+                        "Read char ${characteristic.uuid} value ${ characteristic.value.joinToString(" ") }"
                     )
                 }
             }
@@ -59,11 +61,13 @@ object GattClient {
             gatt: BluetoothGatt,
             characteristic: BluetoothGattCharacteristic
         ) {
-            characteristic.value?.let { data.postValue(it) }
-            Log.i(
-                "BluetoothLog",
-                "${characteristic.value?.joinToString(" ")} size: ${characteristic.value.size}"
-            )
+            if (characteristic.uuid == charUuid) {
+                characteristic.value?.let { data.postValue(it) }
+                Log.i(
+                    "BluetoothLog",
+                    "${characteristic.value?.joinToString(" ")} size: ${characteristic.value.size}"
+                )
+            }
         }
 
         override fun onCharacteristicWrite(
@@ -76,20 +80,18 @@ object GattClient {
                     super.onCharacteristicWrite(gatt, characteristic, status)
                     Log.i(
                         "BluetoothLog",
-                        "Writing ${characteristic.value?.joinToString(" ")} "
+                        "Writing ${characteristic.value?.joinToString(" ")}"
                     )
                 }
             }
         }
     }
 
-    fun connectGatt(devise: BluetoothDevice, context: Context) {
+    fun connectGatt(devise: BluetoothDevice, context: Context) =
         devise.connectGatt(context, true, gattCallback)
-    }
 
-    fun disconnectGatt() {
-        gatt1?.disconnect()
-    }
+    fun disconnectGatt() = gatt1?.disconnect()
+
 
     fun sendData(data: Byte) {
         char1?.value = byteArrayOf(data)

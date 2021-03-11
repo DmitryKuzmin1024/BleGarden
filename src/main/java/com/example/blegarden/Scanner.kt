@@ -1,15 +1,12 @@
 package com.example.blegarden
 
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
-import android.bluetooth.BluetoothProfile
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 
 class Scanner(context: Context) {
     val bluetoothAdapter: BluetoothAdapter by lazy {
@@ -40,7 +37,5 @@ class Scanner(context: Context) {
 
     fun startBleScan() = bleScanner.startScan(null, scanSettings, scanCallback)
 
-    fun stopBleScan() {
-        bleScanner.stopScan(scanCallback)
-    }
+    fun stopBleScan() { bleScanner.stopScan(scanCallback) }
 }

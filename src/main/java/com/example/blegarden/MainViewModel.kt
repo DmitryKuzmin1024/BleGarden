@@ -4,14 +4,14 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-
+import com.example.blegarden.enums.BytesValue
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val mScanner = Scanner(getApplication<Application>().applicationContext)
     val bleData: MutableLiveData<ByteArray> = GattClient.data
 
-    fun setStartButton(byteArray: ByteArray) {
-        if (byteArray.size != 8) {
+    fun setStartButton(dataArray: ByteArray) {
+        if (dataArray.size != 8) {
             if (mScanner.bluetoothAdapter.isEnabled) {
                 mScanner.startBleScan()
             } else {
@@ -34,13 +34,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun setKillAllButton() {
-        GattClient.sendData(BytesValue.KILL_ALL.value)
-    }
+    fun setKillAllButton() = GattClient.sendData(BytesValue.KILL_ALL.value)
 
-    fun modeDevice(int: Int) {
-        GattClient.sendData(int.toByte())
-    }
+    fun modeDevice(int: Int) = GattClient.sendData(int.toByte())
 
 
 }

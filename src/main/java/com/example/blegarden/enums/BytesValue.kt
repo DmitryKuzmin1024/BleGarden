@@ -1,4 +1,4 @@
-package com.example.blegarden
+package com.example.blegarden.enums
 
 enum class BytesValue(val value: Byte) {
     LED_ON(1),
