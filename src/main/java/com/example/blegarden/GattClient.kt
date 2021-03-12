@@ -51,7 +51,7 @@ object GattClient {
                     gatt1?.setCharacteristicNotification(char1, true)
                     Log.i(
                         "BluetoothLog",
-                        "Read char ${characteristic.uuid} value ${ characteristic.value.joinToString(" ") }"
+                        "Set notification ${characteristic.uuid}"
                     )
                 }
             }
@@ -93,11 +93,8 @@ object GattClient {
 
     fun disconnectGatt() = gatt1?.disconnect()
 
-
     fun sendData(data: Byte) {
         char1?.value = byteArrayOf(data)
         gatt1?.writeCharacteristic(char1)
     }
-
-
 }

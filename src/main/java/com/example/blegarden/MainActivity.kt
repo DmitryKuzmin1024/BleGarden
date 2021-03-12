@@ -14,8 +14,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.blegarden.databinding.ActivityMainBinding
 
-private const val ENABLE_BLUETOOTH_REQUEST_CODE = 1
-
 class MainActivity : AppCompatActivity() {
     private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
 
@@ -61,7 +59,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun promptEnableBluetooth() {
         val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-        startActivityForResult(enableBtIntent, ENABLE_BLUETOOTH_REQUEST_CODE)
+        startActivityForResult(enableBtIntent, 1)
     }
-
 }

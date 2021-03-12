@@ -35,8 +35,5 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun setKillAllButton() = GattClient.sendData(BytesValue.KILL_ALL.value)
-
     fun modeDevice(int: Int) = GattClient.sendData(int.toByte())
-
-
 }
