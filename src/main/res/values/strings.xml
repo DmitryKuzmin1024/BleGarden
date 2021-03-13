@@ -3,9 +3,10 @@
     <string name="temperature">t %1$s`C</string>
     <string name="humidity">h %1$s%%</string>.
     <string name="ph">ph %1$s.%2$s</string>
-    <string name="killAll">KILL ALL</string>
+    <string name="turn_off_all">TURN OFF</string>
     <string name="mode1">18/06</string>
     <string name="mode2">12/12</string>
-    <string name="mode0">-0ɟf-</string>
+    <string name="mode0">-OFF-</string>
+    <string name="Turn_on_bluetooth">Turn on bluetooth</string>
 
 </resources>

@@ -10,5 +10,5 @@ enum class BytesValue(val value: Byte) {
     MODE_ZERO(7),
     MODE_ONE(8),
     MODE_TWO(9),
-    KILL_ALL(0)
+    TURN_OFF_ALL(0)
 }

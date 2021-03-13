@@ -17,7 +17,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             } else {
                 Toast.makeText(
                     getApplication<Application>().applicationContext,
-                    "Enable bluetooth",
+                    R.string.Turn_on_bluetooth,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -34,6 +34,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun setKillAllButton() = GattClient.sendData(BytesValue.KILL_ALL.value)
+    fun setTurnOffAllButton() = GattClient.sendData(BytesValue.TURN_OFF_ALL.value)
     fun modeDevice(int: Int) = GattClient.sendData(int.toByte())
 }
