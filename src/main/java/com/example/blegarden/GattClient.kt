@@ -29,15 +29,27 @@ object GattClient {
                     "BluetoothLog",
                     "Discovered ${gatt.services.size} services for ${gatt.device.address}"
                 )
-                gatt.services.firstOrNull { service ->
-                    service.uuid == serviceUuid
-                }
-                    ?.characteristics?.firstOrNull { char ->
+                val myService: BluetoothGattService? =
+                    gatt.services.firstOrNull { service ->
+                        service.uuid == serviceUuid
+                    }
+                val myCharacteristic: BluetoothGattCharacteristic? =
+                    myService?.characteristics?.firstOrNull { char ->
                         char.uuid == charUuid
                     }
-                    ?.let { myChar ->
-                        char1 = myChar.also { gatt1?.readCharacteristic(it) }
+                if (gatt.services.contains(myService)) {
+                    Log.i("BluetoothLog", "service!!")
+                    if (myService?.characteristics?.contains(myCharacteristic) == true) {
+                        Log.i("BluetoothLog", "char!!")
+                        char1 = myCharacteristic.also { gatt1?.readCharacteristic(it) }
+                    } else {
+                        Log.i("BluetoothLog", "!char")
+                        data.postValue(byteArrayOf(0, 0, 0, 0, 0, 0))
                     }
+                } else {
+                    Log.i("BluetoothLog", "!service")
+                    data.postValue(byteArrayOf(0, 0, 0, 0, 0, 0))
+                }
             }
         }
 
@@ -87,8 +99,8 @@ object GattClient {
         }
     }
 
-    fun connectGatt(devise: BluetoothDevice, context: Context) {
-        devise.connectGatt(context, true, gattCallback)
+    fun connectGatt(device: BluetoothDevice, context: Context) {
+        device.connectGatt(context, false, gattCallback)
     }
 
     fun disconnectGatt() = gatt1?.disconnect()

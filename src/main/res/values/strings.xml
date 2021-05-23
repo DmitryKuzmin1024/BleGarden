@@ -8,5 +8,7 @@
     <string name="mode2">12/12</string>
     <string name="mode0">-OFF-</string>
     <string name="Turn_on_bluetooth">Turn on bluetooth</string>
-
+    <string name="all">t %1$s`C h %2$s%% ph %3$s.%4$s</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="scan">Scan</string>
 </resources>

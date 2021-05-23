@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/scanFragment">
+
+    <fragment
+        android:id="@+id/scanFragment"
+        android:name="com.example.blegarden.scanFragment.ScanFragment"
+        android:label="scan_fragment"
+        tools:layout="@layout/scan_fragment">
+        <action
+            android:id="@+id/action_scanFragment_to_blankFragment"
+            app:destination="@id/blankFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/blankFragment"
+        android:name="com.example.blegarden.mainFragment.MainFragment"
+        android:label="BlankFragment">
+        <action
+            android:id="@+id/action_blankFragment_to_scanFragment"
+            app:destination="@id/scanFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+</navigation>

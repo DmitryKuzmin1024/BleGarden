@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.blegarden.mainFragment.MainFragmentViewModel" />
+
+        <variable
+            name="bytesValue"
+            type="com.example.blegarden.enums.BytesValue" />
+
+        <variable
+            name="deviceNames"
+            type="com.example.blegarden.enums.DeviceNames" />
+
+        <variable
+            name="positionsInArray"
+            type="com.example.blegarden.enums.PositionsInArray" />
+
+        <variable
+            name="modeStatus"
+            type="com.example.blegarden.enums.ModeStatus" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".mainFragment.MainFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibleOrZero="@{viewModel.bleData}">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{@string/humidity(Byte.toString(viewModel.bleData[positionsInArray.HUMIDITY.position]))}"
+                android:textSize="56sp"
+                app:layout_constraintBottom_toTopOf="@+id/textView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{@string/temperature(Byte.toString(viewModel.bleData[positionsInArray.TEMPERATURE.position]))}"
+                android:textSize="56sp"
+                app:layout_constraintBottom_toTopOf="@+id/textView1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/ph(Byte.toString(viewModel.bleData[positionsInArray.PH_PART_ONE.position]),Byte.toString(viewModel.bleData[positionsInArray.PH_PART_TWO.position]))}"
+                android:textSize="56sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/buttonWrite3"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:onClick="@{() -> viewModel.setDevice(viewModel.bleData, positionsInArray.CMP_STATUS.position, bytesValue.CMP_ON.value, bytesValue.CMP_OFF.value)}"
+                android:textColor="#009688"
+                app:deviceName="@{deviceNames.CMP.value}"
+                app:intOfArray="@{positionsInArray.CMP_STATUS.position}"
+                app:layout_constraintBottom_toTopOf="@+id/scan_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/buttonWrite2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                app:onOrOff="@{viewModel.bleData}" />
+
+            <Button
+                android:id="@+id/buttonWrite"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:onClick="@{() -> viewModel.setDevice(viewModel.bleData, positionsInArray.LED_STATUS.position, bytesValue.LED_ON.value, bytesValue.LED_OFF.value)}"
+                android:textColor="#009688"
+                app:deviceName="@{deviceNames.LED.value}"
+                app:intOfArray="@{positionsInArray.LED_STATUS.position}"
+                app:layout_constraintBottom_toTopOf="@+id/scan_button"
+                app:layout_constraintEnd_toStartOf="@+id/buttonWrite2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:onOrOff="@{viewModel.bleData}" />
+
+            <Button
+                android:id="@+id/buttonWrite2"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:onClick="@{() -> viewModel.setDevice(viewModel.bleData, positionsInArray.FUN_STATUS.position, bytesValue.FUN_ON.value, bytesValue.FUN_OFF.value)}"
+                android:textColor="#009688"
+                app:deviceName="@{deviceNames.FUN.value}"
+                app:intOfArray="@{positionsInArray.FUN_STATUS.position}"
+                app:layout_constraintBottom_toTopOf="@+id/scan_button"
+                app:layout_constraintEnd_toStartOf="@+id/buttonWrite3"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/buttonWrite"
+                app:onOrOff="@{viewModel.bleData}" />
+
+            <Button
+                android:id="@+id/scan_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#455A64"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonKill"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="DISCONNECT" />
+
+            <Button
+                android:id="@+id/buttonKill"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="@{() -> viewModel.setTurnOffAllButton()}"
+                android:text="@string/turn_off_all"
+                android:textColor="#FF5722"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/scan_button" />
+
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:orientation="horizontal"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/buttonWrite3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:visibleOrZero="@{viewModel.bleData}">
+
+                <RadioButton
+                    android:id="@+id/radio_red1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="2.5dp"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> viewModel.modeDevice(bytesValue.MODE_ONE.value)}"
+                    android:text="@string/mode1"
+                    app:modeStatus="@{modeStatus.MODE_ONE.mode}"
+                    app:setMode="@{viewModel.bleData}" />
+
+                <RadioButton
+                    android:id="@+id/radio_red2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2.5dp"
+                    android:layout_marginEnd="2.5dp"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> viewModel.modeDevice(bytesValue.MODE_TWO.value)}"
+                    android:text="@string/mode2"
+                    app:modeStatus="@{modeStatus.MODE_TWO.mode}"
+                    app:setMode="@{viewModel.bleData}" />
+
+                <RadioButton
+                    android:id="@+id/radio_red0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2.5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> viewModel.modeDevice(bytesValue.MODE_ZERO.value)}"
+                    android:text="@string/mode0"
+                    app:modeStatus="@{modeStatus.MODE_ZERO.mode}"
+                    app:setMode="@{viewModel.bleData}" />
+
+            </RadioGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:waitingBarVisibility="@{viewModel.bleData}" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="NO DATA"
+            android:textSize="56sp"
+            app:noDataErrorVisibility = "@{viewModel.bleData}"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

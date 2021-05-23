@@ -1,0 +1,55 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.blegarden.scanFragment.ScanFragmentViewModel" />
+
+        <variable
+            name="item"
+            type="com.example.blegarden.BTDevice" />
+
+        <variable
+            name="clickListener"
+            type="com.example.blegarden.RecyclerAdapter.DeviceClickListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="4dp"
+        android:onClick="@{() -> clickListener.onClick(item)}"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:elevation="5dp"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/text_view_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.name}"
+                android:textColor="@android:color/black"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_view_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_1"
+                android:text="@{item.address}"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,36 +1,34 @@
 package com.example.blegarden
 
 import android.Manifest
+import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
-import com.example.blegarden.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
+        window.statusBarColor = Color.BLACK
 
         promptEnableBluetooth()
-        permissionCheck()
-
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        locationPermissionCheck()
+        locationStatusCheck()
     }
 
-    private fun permissionCheck() {
+    private fun locationPermissionCheck() {
         val permissionCheck =
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
@@ -59,6 +57,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun promptEnableBluetooth() {
         val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-        startActivityForResult(enableBtIntent, 1)
+        startActivity(enableBtIntent)
+    }
+
+    private fun locationStatusCheck() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                AlertDialog.Builder(this)
+                    .setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                    .setCancelable(false)
+                    .setPositiveButton(
+                        "Yes"
+                    ) { _, _ -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) }
+                    .setNegativeButton(
+                        "No"
+                    ) { dialog, _ -> dialog.cancel() }
+                    .create().show()
+            }
+        }
     }
 }
